@@ -45,13 +45,6 @@
                 console.log("password:"+password);
                 var message = document.getElementById("message");
 
-                // if(password !== retype){
-                //     event.preventDefault();
-                //     message.innerHTML = "Passwords do not match!"
-                // }else{
-                //     message.innerHTML = "";
-                     
-                // }
 
                 if (form !== undefined && password == retype) {
                     // Validation succeeded, submit the form
@@ -76,7 +69,6 @@
                     body: JSON.stringify({username, password})
                 }).then(response =>{
 
-                    alert(response.status);
                     if (response.status == 200) {
                         alert('User registered successfully.');
                     }

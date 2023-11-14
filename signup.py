@@ -12,45 +12,17 @@ def get_user():
     data =request.get_json()
     username = data.get('username')
     password = data.get('password')
-    #print(user_exists(username))
-    #hashed_password = bcrypt.using(rounds=12).hash(password)
+
+    hashed_password = bcrypt.using(rounds=12).hash(password)
 
     if user_exists(username) == True:
-         print(f"User already exists {username} {password}")
-         #return jsonify({'message':'user already exists! '})
-         #abort(401, "Error message goes here")
          response = {'status': 'error', 'message': "Hello world"}
          return jsonify(response), 401
     else:
-        storeData(username, password)
+        storeData(username, hashed_password)
         response_data = {"status": "success", "message": "user Register sucessfull"}
-    
         return jsonify(response_data), 200
-        #return jsonify({'message':'user Register sucessfully'})
-        #abort(400, "Error message goes here")
-    
-
-# @app.route('/register',methods=['POST'])
-# def register_user():
-#     data =request.get_json()
-    
-#     username = data.get('username')
-#     password = data.get('password')
-
-#     hashed_password = bcrypt.using(rounds=12).hash(password)
-
-#     if user_exists(username) == True:
-#         print(f"User already exists {username} {password}")
-#         #return jsonify({'error': 'user already exists!'})
-#         return jsonify({'message':'user already exists! '})
-#     else:
-
-#         storeData(username, hashed_password)
-
-#         return jsonify({'message':'user Register sucessfully'})
-
-
-
+        
 def storeData(username,password):
     connection = sqlite3.connect('mydatabase.db')
     cursor = connection.cursor()
@@ -60,7 +32,7 @@ def storeData(username,password):
 
     cursor.execute("INSERT INTO Registered_User (username, hashedpassword) VALUES (?, ?)", (username, password))
     connection.commit()
-    #connection.close()
+    connection.close()
 
 def user_exists(username):
     connection = sqlite3.connect('mydatabase.db')
@@ -68,7 +40,6 @@ def user_exists(username):
     query = "SELECT * FROM Registered_User WHERE username = ?"
     cursor.execute(query,(username,))
     data = cursor.fetchall()
-    print("user:", data)
     connection.close()
 
     if len(data) ==0:
