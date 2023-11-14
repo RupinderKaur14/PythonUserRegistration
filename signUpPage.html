@@ -10,7 +10,7 @@
                 <h3>Register New User</h3>
             </div>
             
-            <form title="Register"  onsubmit="return validateForm(event)">
+            <form title="Register" onsubmit="check_form(this); return false;" method="post">
 
                 <div class="form-group">
                 <span><label for="username">Username </label>
@@ -32,30 +32,41 @@
                 </div>
 
                 <div class="button-group">
-                <button type="submit" name="submit" style=" background-color: rgb(173 210 231)">SUBMIT</button>
+                <button type="submit" name="submit" style=" background-color: rgb(173 210 231)" >SUBMIT</button>
                 <button type="reset" name="cancel" style="background-color: rgb(243, 168, 168);">CANCEL</button>
                 </div>
             </form>
         </div>
         <script>
-            function validateForm(event) {
+            function check_form(form) {
                 
                 var password = document.getElementById("password").value;
                 var retype =  document.getElementById("rePassword").value;
                 console.log("password:"+password);
                 var message = document.getElementById("message");
 
-                if(password !== retype){
-                    event.preventDefault();
-                    message.innerHTML = "Passwords do not match!"
-                }else{
+                // if(password !== retype){
+                //     event.preventDefault();
+                //     message.innerHTML = "Passwords do not match!"
+                // }else{
+                //     message.innerHTML = "";
+                     
+                // }
+
+                if (form !== undefined && password == retype) {
+                    // Validation succeeded, submit the form
                     message.innerHTML = "";
                     registerUser();
+                } else {
+                    event.preventDefault();
+                    message.innerHTML = "Passwords do not match!"
                 }
+
+                
             }
 
             function registerUser() {
-                
+                console.log("Inside register user");
                 const  username = document.getElementById('username').value;
                 const  password = document.getElementById('password').value;
                 
@@ -78,30 +89,7 @@
                 }).catch(error =>{
                     console.error("Registration error:",error);
                 });
-
-
-                /*
-                fetch("http://127.0.0.1:5000/register",{
-                    method: 'POST',
-                    headers: { 'Content-Type':'application/json'},
-                    body: JSON.stringify({username, password})
-                }).then(response =>{
-                    alert("hello world");
-                    console.log(response);
-                    // if (response.status == 200) {
-                    //     window.alert('User registered successfully.');
-                    //     console.log('User registered successfully.');
-                    // }else if(response.status === 400){
-                    //     window.alert('Username is already exist.');
-                    //     console.log('Username is already exist.');
-                    // }else {
-                    //     window.alert('Registration failed.');
-                    //     console.log('Registration failed.');
-                    // }
-                }).catch(error =>{
-                    console.error("Registration error:",error);
-                });*/
-
+                
             }
             
 

@@ -18,12 +18,14 @@ def get_user():
     if user_exists(username) == True:
          print(f"User already exists {username} {password}")
          #return jsonify({'message':'user already exists! '})
-         abort(401, "Error message goes here")
+         #abort(401, "Error message goes here")
+         response = {'status': 'error', 'message': "Hello world"}
+         return jsonify(response), 401
     else:
         storeData(username, password)
-        response_data = {"status": "OK", "message": "user Register sucessfull"}
+        response_data = {"status": "success", "message": "user Register sucessfull"}
     
-        return jsonify(response_data)
+        return jsonify(response_data), 200
         #return jsonify({'message':'user Register sucessfully'})
         #abort(400, "Error message goes here")
     
