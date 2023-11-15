@@ -25,6 +25,7 @@ form {
 }
 
 .header-group{
+    text-align: center;
     padding: 5px; 
     border-bottom: 1px solid black;
 }
@@ -34,6 +35,7 @@ h3 {
 }
 
 .form-group {
+    justify-content: space-between;
     text-align: left;
 }
 

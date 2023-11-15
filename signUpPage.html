@@ -5,6 +5,13 @@
         <link rel="stylesheet" type="text/css" href="style.css">
     </head>
     <body>
+        <div class="success" style="background-color: green; color: white; text-align: center;">
+            <p id="successMessage" ></p>
+        </div>
+        <div class="failed" style="background-color: red; color: white; text-align: center;">
+            <p id="failedMessage" ></p>
+        </div>
+
         <div class="signup-container">
             <div class="header-group">
                 <h3>Register New User</h3>
@@ -13,8 +20,8 @@
             <form title="Register" onsubmit="check_form(this); return false;" method="post">
 
                 <div class="form-group">
-                <span><label for="username">Username </label>
-                    <input type="text" id="username" name="username" required></span>
+                <label for="username">Username </label>
+                    <input type="text" id="username" name="username" required>
                 </div>
            
                 <div class="form-group">
@@ -62,6 +69,11 @@
                 console.log("Inside register user");
                 const  username = document.getElementById('username').value;
                 const  password = document.getElementById('password').value;
+                var smessage = document.getElementById("successMessage");
+                
+
+                var fmessage = document.getElementById("failedMessage");
+              
                 
                 fetch("http://127.0.0.1:5000/user",{
                     method: 'POST',
@@ -70,12 +82,15 @@
                 }).then(response =>{
 
                     if (response.status == 200) {
-                        alert('User registered successfully.');
+                        fmessage.innerHTML = "";
+                        smessage.innerHTML = 'User registered successfully.';
                     }
                     else if (response.status == 401) {
-                        alert('Username is already exist.');
+                        smessage.innerHTML = "";
+                        fmessage.innerHTML = 'User already exist.';
                     } else {
-                        alert('Registration failed.');
+                        smessage.innerHTML = "";
+                        fmessage.innerHTML = 'Registration failed.';
                     }                 
                 
                 }).catch(error =>{
