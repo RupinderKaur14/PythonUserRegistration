@@ -41,6 +41,7 @@ def user_exists(username):
     cursor.execute(query,(username,))
     data = cursor.fetchall()
     connection.close()
+    print(data)
 
     if len(data) ==0:
         return False
